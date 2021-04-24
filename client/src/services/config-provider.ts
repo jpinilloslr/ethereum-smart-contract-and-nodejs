@@ -38,8 +38,9 @@ export class ConfigProvider {
   public get web3Provider(): any {
     const providerName = this.providerName;
     if (!this._providerBuilders[providerName]) {
-      throw new Error(`Unknown provider name ${providerName}`);
+      throw new Error(`Unknown provider name: ${providerName}`);
     }
+    console.log(`Using web3 provider: ${providerName}`);
     return this._providerBuilders[providerName]();
   }
 

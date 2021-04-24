@@ -8,7 +8,10 @@ export class MySmartContract {
 
   public constructor() {
     this._web3 = getWeb3();
-    this._contract = new this._web3.eth.Contract(<any>ABI, Address);
+    this._contract = new this._web3.eth.Contract(
+      <any>ABI,
+      getConfig().contractAddress
+    );
   }
 
   public async get(): Promise<string> {
@@ -25,5 +28,46 @@ export class MySmartContract {
 }
 
 // prettier-ignore
-const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"get","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"message","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"newMessage","type":"string"}],"name":"set","outputs":[],"stateMutability":"nonpayable","type":"function"}]
-const Address = '0xea35e277cbe30b695bc9061d79a53371f2811941';
+const ABI = [
+  {
+    "inputs": [],
+    "name": "last_completed_migration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "completed",
+        "type": "uint256"
+      }
+    ],
+    "name": "setCompleted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
