@@ -14,6 +14,7 @@ const run = async () => {
   await printCurrentBalance();
   const finalBalance = await getCurrentBalance();
   console.log(`${startBalance - finalBalance} ETH spent`);
+  process.exit();
 };
 
 const printCurrentBalance = async () => {
