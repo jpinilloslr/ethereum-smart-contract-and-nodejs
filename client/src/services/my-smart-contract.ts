@@ -18,56 +18,19 @@ export class MySmartContract {
     return await this._contract.methods.get().call();
   }
 
-  public async set(text: string): Promise<string> {
-    return await this._contract.methods.set().call(text, {
-      from: getConfig().accountAddress,
-      gas: 1000000,
-      value: this._web3.utils.toWei('59', 'gwei'),
-    });
+  public async set(text: string): Promise<void> {
+    await this._contract.methods
+      .set(text)
+      .send({
+        from: getConfig().accountAddress,
+        gasPrice: this._web3.utils.toWei('5', 'gwei'),
+        gasLimit: 64527,
+      })
+      .on('transactionHash', (hash: string) =>
+        console.log(`Waiting for TXN: ${hash}`)
+      );
   }
 }
 
 // prettier-ignore
-const ABI = [
-  {
-    "inputs": [],
-    "name": "last_completed_migration",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "completed",
-        "type": "uint256"
-      }
-    ],
-    "name": "setCompleted",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-];
+const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"get","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"message","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"newMessage","type":"string"}],"name":"set","outputs":[],"stateMutability":"nonpayable","type":"function"}];
