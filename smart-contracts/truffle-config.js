@@ -53,6 +53,7 @@ module.exports = {
       },
       network_id: 3,
       gas: 4000000, //make sure this gas allocation isn't over 4M, which is the max
+      timeoutBlocks: 200,
     },
     // Another network with more advanced options...
     // advanced: {
