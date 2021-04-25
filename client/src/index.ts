@@ -6,18 +6,26 @@ import { getWeb3 } from './services/web3-factory';
 
 const run = async () => {
   const contract = new MySmartContract();
+  const startBalance = await getCurrentBalance();
   await printCurrentBalance();
   await readFromContract(contract);
   await writeToContract(contract);
   await readFromContract(contract);
   await printCurrentBalance();
+  const finalBalance = await getCurrentBalance();
+  console.log(`${startBalance - finalBalance} ETH spent`);
 };
 
 const printCurrentBalance = async () => {
+  const etherBalance = await getCurrentBalance();
+  console.log(`Balance: ${etherBalance} ETH`);
+};
+
+const getCurrentBalance = async () => {
   const web3 = getWeb3();
   const balance = await web3.eth.getBalance(getConfig().accountAddress);
   const etherBalance = web3.utils.fromWei(balance, 'ether');
-  console.log(`Balance: ${etherBalance} ETH`);
+  return parseFloat(etherBalance);
 };
 
 const readFromContract = async (contract: MySmartContract) => {
