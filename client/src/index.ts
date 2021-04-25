@@ -14,7 +14,6 @@ const run = async () => {
   await printCurrentBalance();
   const finalBalance = await getCurrentBalance();
   console.log(`${startBalance - finalBalance} ETH spent`);
-  process.exit();
 };
 
 const printCurrentBalance = async () => {
@@ -31,15 +30,18 @@ const getCurrentBalance = async () => {
 
 const readFromContract = async (contract: MySmartContract) => {
   console.log('Reading from smart contract');
-  const msg = await contract.get();
+  const msg = await contract.getMessage();
   console.log(`Current value: ${msg}`);
 };
 
 const writeToContract = async (contract: MySmartContract) => {
   console.log('Writing to smart contract');
-  await contract.set(`Hi, today is ${new Date().toString()}`);
+  await contract.updateMessage(`Hi, today is ${new Date().toString()}`);
 };
 
 run()
-  .then(() => true)
-  .catch((e) => console.error(e));
+  .then(() => process.exit(0))
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });

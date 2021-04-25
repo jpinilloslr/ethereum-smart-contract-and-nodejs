@@ -14,17 +14,17 @@ export class MySmartContract {
     );
   }
 
-  public async get(): Promise<string> {
-    return await this._contract.methods.get().call();
+  public async getMessage(): Promise<string> {
+    return await this._contract.methods.message().call();
   }
 
-  public async set(text: string): Promise<void> {
+  public async updateMessage(text: string): Promise<void> {
     await this._contract.methods
-      .set(text)
+      .update(text)
       .send({
         from: getConfig().accountAddress,
-        gasPrice: this._web3.utils.toWei('5', 'gwei'),
-        gasLimit: 64527,
+        gasPrice: this._web3.utils.toWei('10', 'gwei'),
+        gasLimit: 96000,
       })
       .on('transactionHash', (hash: string) =>
         console.log(`Waiting for TXN: ${hash}`)
@@ -33,4 +33,4 @@ export class MySmartContract {
 }
 
 // prettier-ignore
-const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"get","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"message","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"newMessage","type":"string"}],"name":"set","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+const ABI = [{"inputs":[],"name":"message","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"value","type":"string"}],"name":"update","outputs":[],"stateMutability":"nonpayable","type":"function"}];
