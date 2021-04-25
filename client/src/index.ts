@@ -14,15 +14,10 @@ const run = async () => {
 };
 
 const printCurrentBalance = async () => {
-  const etherBalance = await getCurrentBalance();
-  console.log(`Balance: ${etherBalance} ETH`);
-};
-
-const getCurrentBalance = async () => {
   const web3 = getWeb3();
   const balance = await web3.eth.getBalance(getConfig().accountAddress);
   const etherBalance = web3.utils.fromWei(balance, 'ether');
-  return parseFloat(etherBalance);
+  console.log(`Balance: ${etherBalance} ETH`);
 };
 
 const readFromContract = async (contract: MySmartContract) => {
