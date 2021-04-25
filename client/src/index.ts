@@ -6,14 +6,11 @@ import { getWeb3 } from './services/web3-factory';
 
 const run = async () => {
   const contract = new MySmartContract();
-  const startBalance = await getCurrentBalance();
   await printCurrentBalance();
   await readFromContract(contract);
   await writeToContract(contract);
   await readFromContract(contract);
   await printCurrentBalance();
-  const finalBalance = await getCurrentBalance();
-  console.log(`${startBalance - finalBalance} ETH spent`);
 };
 
 const printCurrentBalance = async () => {

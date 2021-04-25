@@ -17,7 +17,6 @@ $ npm install
 
 ```bash
 $ cd ./smart-contractstru
-$ npm install
 $ npm run compile
 ```
 
